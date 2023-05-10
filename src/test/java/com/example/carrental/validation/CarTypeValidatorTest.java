@@ -21,7 +21,7 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
         "app.standardMax=33",
         "app.suvMin=33"
 })
-public class CarTypeValidatorTest {
+class CarTypeValidatorTest {
 
     @Autowired
     private CarTypeValidator carTypeValidator;
@@ -88,31 +88,31 @@ public class CarTypeValidatorTest {
     }
 
     @Test
-    public void testValidEconomyCar() {
+    void testValidEconomyCar() {
         CarDto carDto = new CarDto(1L, "Honda", "Civic", "red", CarType.ECONOMY, BigDecimal.valueOf(10));
         assertTrue(carTypeValidator.isValid(carDto, context));
     }
 
     @Test
-    public void testInvalidEconomyCar() {
+    void testInvalidEconomyCar() {
         CarDto carDto = new CarDto(1L, "Honda", "Civic", "red", CarType.ECONOMY, BigDecimal.valueOf(20));
         assertFalse(carTypeValidator.isValid(carDto, context));
     }
 
     @Test
-    public void testValidStandardCar() {
+    void testValidStandardCar() {
         CarDto carDto = new CarDto(1L, "Toyota", "Camry", "red", CarType.STANDARD, BigDecimal.valueOf(25));
         assertTrue(carTypeValidator.isValid(carDto, context));
     }
 
     @Test
-    public void testInvalidStandardCar_lowPrice() {
+    void testInvalidStandardCar_lowPrice() {
         CarDto carDto = new CarDto(1L, "Toyota", "Camry", "red", CarType.STANDARD, BigDecimal.valueOf(10));
         assertFalse(carTypeValidator.isValid(carDto, context));
     }
 
     @Test
-    public void testInvalidStandardCar_highPrice() {
+    void testInvalidStandardCar_highPrice() {
         CarDto carDto = new CarDto(1L, "Toyota", "Camry", "red", CarType.STANDARD, BigDecimal.valueOf(40));
         assertFalse(carTypeValidator.isValid(carDto, context));
     }

@@ -1,22 +1,32 @@
 spring:
-  jpa:
-    open-in-view: 'true'
-    properties:
-      hibernate:
-        dialect: org.hibernate.dialect.PostgreSQLDialect
-    hibernate:
-      ddl-auto: update
-    show-sql: 'true'
   datasource:
     driver-class-name: org.postgresql.Driver
     username: postgres
     url: jdbc:postgresql://localhost:5432/rentacar
     password: root
+  jpa:
+    hibernate:
+      ddl-auto: create-drop
+    open-in-view: true
+    properties:
+      hibernate:
+        dialect: org.hibernate.dialect.PostgreSQLDialect
+        format_sql: true
+    show-sql: true
+
   data:
     web:
       pageable:
-        default-page-size: '10'
+        default-page-size: 10
 app:
   suvMin: ${SUV_MIN:33}
   economyMax: ${ECONOMY_MAX:18}
   standardMax: ${STANDARD_MAX:33}
+
+application:
+  security:
+    jwt:
+      secret-key: 4D6251655468576D5A7134743777217A25432646294A404E635266556A586E32
+      expiration: 86400000 # a day
+      refresh-token:
+        expiration: 604800000 # 7 days

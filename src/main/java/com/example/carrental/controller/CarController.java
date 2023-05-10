@@ -7,7 +7,9 @@ import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
@@ -21,9 +23,11 @@ public class CarController {
     private final CarService carService;
 
     @PostMapping
-    public ResponseEntity<String> createCar(@Validated @RequestBody CarDto carDto) {
+    @ResponseStatus(HttpStatus.CREATED)
+    @PreAuthorize("hasAuthority('admin:create')")
+    public String createCar(@Validated @RequestBody CarDto carDto) {
         CarDto savedCar = carService.create(carDto);
-        return ResponseEntity.ok(String.format("The car with id %d has been saved", savedCar.getId()));
+        return String.format("The car with id %d has been saved", savedCar.getId());
     }
 
     @GetMapping("/{id}")
@@ -32,6 +36,7 @@ public class CarController {
     }
 
     @PutMapping("/{id}")
+    @PreAuthorize("hasAuthority('admin:update')")
     public ResponseEntity<CarDto> replaceCar(
             @PathVariable Long id,
             @Validated @RequestBody CarDto carDto
@@ -40,6 +45,7 @@ public class CarController {
     }
 
     @PatchMapping("/{id}/price")
+    @PreAuthorize("hasAuthority('admin:update')")
     public ResponseEntity<CarDto> updatePrice(
             @PathVariable Long id,
             @RequestBody @Valid CarDto carDto

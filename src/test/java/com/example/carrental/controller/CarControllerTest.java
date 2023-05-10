@@ -88,10 +88,10 @@ class CarControllerTest {
 
         when(carService.create(carDto)).thenReturn(savedCar);
 
-        ResponseEntity<String> responseEntity = carController.createCar(carDto);
+       String response = carController.createCar(carDto);
 
-        assertEquals(HttpStatus.OK, responseEntity.getStatusCode());
-        assertEquals(String.format("The car with id %d has been saved", savedCar.getId()), responseEntity.getBody());
+        assertEquals(HttpStatus.CREATED, response);
+        assertEquals(String.format("The car with id %d has been saved", savedCar.getId()), response);
     }
 
     @Test

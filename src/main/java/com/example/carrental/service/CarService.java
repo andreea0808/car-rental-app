@@ -89,6 +89,7 @@ public class CarService {
                 );
     }
 
+    // Ideally, this should return Car since method might be used in other services and you won't wanna use dtos
     public CarDto fetchCarById(Long id) {
         return carRepository.findById(id)
                 .map(carMapper::toDto)
@@ -99,6 +100,12 @@ public class CarService {
 
     public Page<CarDto> findAllCarsSortedByPrice(Pageable pageable) {
         Page<Car> cars = carRepository.findAllByOrderByPriceAsc(pageable);
+        List<CarDto> carDtoList = cars.get().map(this::convertToDto).toList();
+        return new PageImpl<>(carDtoList, cars.getPageable(), cars.getTotalElements());
+    }
+
+    public Page<CarDto> findAllByCarTypeOrderByPriceAsc(CarType carType, Pageable pageable) {
+        Page<Car> cars = carRepository.findAllByCarTypeOrderByPriceAsc(carType, pageable);
         List<CarDto> carDtoList = cars.get().map(this::convertToDto).toList();
         return new PageImpl<>(carDtoList, cars.getPageable(), cars.getTotalElements());
     }

@@ -6,7 +6,8 @@ import lombok.*;
 import java.math.BigDecimal;
 
 @Entity
-@Table(name = "car")
+@Table(name = "car",
+        indexes = @Index(name = "car_type_idx", columnList = "UPPER(carType")) // can't remember if upper works here
 @Getter
 @Setter
 @NoArgsConstructor
@@ -15,14 +16,7 @@ import java.math.BigDecimal;
 public class Car {
 
     @Id
-    @SequenceGenerator(
-            name = "car_sequence",
-            allocationSize = 1
-    )
-    @GeneratedValue(
-            generator = "car_sequence",
-            strategy = GenerationType.SEQUENCE
-    )
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
     @Column(length = 200)

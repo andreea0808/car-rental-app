@@ -1,6 +1,7 @@
 package com.example.carrental.repository;
 
 import com.example.carrental.model.Car;
+import com.example.carrental.model.CarType;
 import com.example.carrental.util.NumberOfTypes;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -18,4 +19,5 @@ public interface CarRepository extends JpaRepository<Car, Long> {
 
     Page<Car> findAllByOrderByPriceAsc(Pageable pageable);
 
+    Page<Car> findAllByCarTypeOrderByPriceAsc(CarType carType, Pageable pageable);
 }

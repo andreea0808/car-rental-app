@@ -25,9 +25,10 @@ public class CarController {
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
     @PreAuthorize("hasAuthority('admin:create')")
-    public String createCar(@Validated @RequestBody CarDto carDto) {
+    public ResponseEntity<CarDto> createCar(@Validated @RequestBody CarDto carDto) {
         CarDto savedCar = carService.create(carDto);
-        return String.format("The car with id %d has been saved", savedCar.getId());
+        //return ResponseEntity.ok(savedCar); // status 200
+        return new ResponseEntity<>(savedCar, HttpStatus.CREATED); // 201
     }
 
     @GetMapping("/{id}")

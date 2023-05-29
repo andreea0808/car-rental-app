@@ -1,0 +1,39 @@
+spring:
+  datasource:
+    driver-class-name: org.postgresql.Driver
+    url: jdbc:postgresql://localhost:5432/rentacar
+    username: ${db_username}
+    password: ${db_password}
+  jpa:
+    hibernate:
+      ddl-auto: validate
+    open-in-view: true
+    properties:
+      hibernate:
+        dialect: org.hibernate.dialect.PostgreSQLDialect
+        format_sql: true
+    show-sql: true
+  data:
+    web:
+      pageable:
+        default-page-size: 10
+  flyway:
+    baselineOnMigrate: true
+    enabled: true
+    baselineDescription: "init"
+    baselineVersion: 0
+    user: ${db_username}
+    password: ${db_password}
+
+app:
+  suvMin: ${SUV_MIN:33}
+  economyMax: ${ECONOMY_MAX:18}
+  standardMax: ${STANDARD_MAX:33}
+
+application:
+  security:
+    jwt:
+      secret-key: 4D6251655468576D5A7134743777217A25432646294A404E635266556A586E32
+      expiration: 86400000 # a day
+      refresh-token:
+        expiration: 604800000 # 7 days

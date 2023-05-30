@@ -10,3 +10,8 @@ spring:
     hibernate:
       ddl-auto: create-drop
       show-sql: true
+
+app:
+  suvMin: ${SUV_MIN:33}
+  economyMax: ${ECONOMY_MAX:18}
+  standardMax: ${STANDARD_MAX:33}
